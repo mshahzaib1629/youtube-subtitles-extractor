@@ -21,6 +21,6 @@ def subtitle_extractor(file_path):
     return subtitle_string
 
 
-FILE_NAME = "Israel： Above the law？ ｜ Featured Documentary [ueXEXjqXNvk].en.json3"
+FILE_NAME = "Are colleges obstructing free speech for Pro-Palestinian student activists？ ｜ UpFront [f-tJ0_RFNvc].en.json3"
 file_path = os.path.join("subtitles", FILE_NAME)
 print(subtitle_extractor(file_path))
