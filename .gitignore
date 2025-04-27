@@ -1,4 +1,6 @@
 /subtitles
+/outputs
 .env
 node_modules
 chromium
+/venv

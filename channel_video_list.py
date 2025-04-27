@@ -4,9 +4,9 @@
 # https://developers.google.com/explorer-help/code-samples#python
 
 import os
+import argparse
 
 import googleapiclient.discovery
-import googleapiclient.errors
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -47,6 +47,18 @@ def get_videos_list(channel_id, max_results, pageToken=None):
         get_videos_list(channel_id, MAX_RESULTS, nextPageToken)
 
 
-CHANNEL_ID = "UCNye-wNBqNL5ZzHSJj3l8Bg"
-MAX_RESULTS = 300
-get_videos_list(CHANNEL_ID, MAX_RESULTS)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Get video IDs from a YouTube channel')
+    parser.add_argument('--channel_id', '-c', type=str, help='YouTube channel ID')
+    parser.add_argument('--max_results', '-m', type=int, default=300, 
+                        help='Maximum number of results per page (default: 300)')
+    args = parser.parse_args()
+    
+    # If channel_id is not provided via argument, prompt the user
+    channel_id = args.channel_id
+    if not channel_id:
+        channel_id = input("Enter the YouTube channel ID: ")
+    
+    MAX_RESULTS = args.max_results
+    print(f"Fetching videos for channel ID: {channel_id}")
+    get_videos_list(channel_id, MAX_RESULTS)
