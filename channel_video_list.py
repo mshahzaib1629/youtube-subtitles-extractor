@@ -23,7 +23,7 @@ def get_videos_list(channel_id, max_results, pageToken=None):
     )
 
     request = youtube.activities().list(
-        part="contentDetails",
+        part="contentDetails,snippet",
         channelId=channel_id,
         maxResults=max_results,
         pageToken=pageToken
@@ -31,13 +31,13 @@ def get_videos_list(channel_id, max_results, pageToken=None):
     response = request.execute()
        
     for item in response["items"]:
+        video_id = None
         if "upload" in item["contentDetails"].keys():
-            print(f"videoId (u): ", item["contentDetails"]["upload"]["videoId"])
+            video_id = item["contentDetails"]["upload"]["videoId"]
+            print(f"videoId: {video_id} | Title: {item['snippet']['title']}")
         elif "playlistItem" in item["contentDetails"].keys():
-            print(
-                f"videoId (p): ",
-                item["contentDetails"]["playlistItem"]["resourceId"]["videoId"],
-            )
+            video_id = item["contentDetails"]["playlistItem"]["resourceId"]["videoId"]
+            print(f"videoId: {video_id} | Title: {item['snippet']['title']}")
 
     print(f'page info: {response["pageInfo"]}')
     if "nextPageToken" in response.keys():
@@ -50,8 +50,8 @@ def get_videos_list(channel_id, max_results, pageToken=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Get video IDs from a YouTube channel')
     parser.add_argument('--channel_id', '-c', type=str, help='YouTube channel ID')
-    parser.add_argument('--max_results', '-m', type=int, default=300, 
-                        help='Maximum number of results per page (default: 300)')
+    parser.add_argument('--max_results', '-m', type=int, default=30, 
+                        help='Maximum number of results per page (default: 30)')
     args = parser.parse_args()
     
     # If channel_id is not provided via argument, prompt the user
