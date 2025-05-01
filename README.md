@@ -1,4 +1,4 @@
-# YouTube Subtitle Extractor
+# YouSub
 
 A Python toolset to fetch video IDs from YouTube channels and download their subtitles in multiple languages.
 
